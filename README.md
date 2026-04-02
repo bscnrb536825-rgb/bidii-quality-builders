@@ -1,2 +1,2 @@
 # bidii_quality_builders
-Biddii-Quality-Builders Project
+Biddii_Quality_Builders Project

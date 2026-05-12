@@ -1,0 +1,120 @@
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Customer List</h2>
+
+        <a href="{% url 'customer_app:add_customer' %}" class="btn btn-primary">
+            + Add Customer
+        </a>
+    </div>
+
+    <div class="row">
+
+        {% for customer in page_obj %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+
+                    <h4 class="card-title fw-bold text-primary">
+                        {{ customer.first_name }} {{ customer.last_name }}
+                    </h4>
+
+                    <hr>
+
+                    <p>
+                        <strong>Email:</strong><br>
+                        {{ customer.email }}
+                    </p>
+
+                    <p>
+                        <strong>Phone:</strong><br>
+                        {{ customer.phone }}
+                    </p>
+
+                    <p>
+                        <strong>Address:</strong><br>
+                        {{ customer.address }}
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+
+                        <!-- Edit Button -->
+                        <a href="{% url 'customer_app:edit_customer' customer.id %}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <!-- Delete Button -->
+                        <form action="{% url 'customer_app:delete_customer' customer.id %}"
+                              method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                Delete
+                            </button>
+                        </form>
+
+                        <!-- Export PDF Button -->
+                        {% if customer.id %}
+                        <a href="{% url 'reports_app:customer_report_pdf' customer.id %}"
+                           class="btn btn-success btn-sm">
+                            Export PDF
+                        </a>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+            <div class="alert alert-info">
+                No customers found.
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    <div class="mt-4 text-center">
+
+        {% if page_obj.has_previous %}
+            <a href="?page=1"
+               class="btn btn-outline-secondary btn-sm">
+                First
+            </a>
+
+            <a href="?page={{ page_obj.previous_page_number }}"
+               class="btn btn-outline-secondary btn-sm">
+                Previous
+            </a>
+        {% endif %}
+
+        <span class="mx-2 fw-bold">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}"
+               class="btn btn-outline-secondary btn-sm">
+                Next
+            </a>
+
+            <a href="?page={{ page_obj.paginator.num_pages }}"
+               class="btn btn-outline-secondary btn-sm">
+                Last
+            </a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>

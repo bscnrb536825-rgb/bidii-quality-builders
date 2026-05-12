@@ -1,0 +1,221 @@
+/* =========================
+   GENERAL PAGE STYLING
+========================= */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #2c3e50;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h3 {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #34495e;
+}
+
+
+/* Logout Button */
+.sidebar .logout-btn {
+    width: 70%;
+    margin: 10px;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+}
+
+.sidebar .logout-btn:hover {
+    background-color: #c0392b;
+}
+
+
+/* =========================
+   MAIN CONTENT
+========================= */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.add-btn,
+button {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.add-btn:hover,
+button:hover {
+    background-color: #219150;
+}
+
+/* =========================
+   TABLES
+========================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+table th {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* =========================
+   CUSTOMER CARDS
+========================= */
+.customer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.customer-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.customer-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+/* =========================
+   ACTION LINKS
+========================= */
+.actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.delete {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.edit:hover {
+    color: #1f6692;
+}
+
+.delete:hover {
+    color: #c0392b;
+}
+
+/* =========================
+   FORMS
+========================= */
+form {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .main-content {
+        margin-left: 200px;
+        padding: 20px;
+    }
+
+    .sidebar a {
+        font-size: 16px;
+    }
+}

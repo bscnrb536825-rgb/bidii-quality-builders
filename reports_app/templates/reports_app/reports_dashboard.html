@@ -1,0 +1,167 @@
+{% extends 'customer_app/base.html' %}
+
+{% block content %}
+
+<!-- ================= LIBRARIES ================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+<h1 class="mb-4">Reports Dashboard</h1>
+
+<!-- ================= ACTION BUTTONS ================= -->
+<a href="{% url 'reports_app:export_reports_pdf' %}" class="btn btn-outline-danger mb-3">
+    <i class="fa fa-file-pdf"></i> Export PDF (Server)
+</a>
+
+<button class="btn btn-dark mb-3" onclick="downloadPDF()">
+    Download Charts PDF
+</button>
+
+<!-- ================= SUMMARY CARDS ================= -->
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white mb-3">
+            <div class="card-body">
+                <h5>Total Customers</h5>
+                <h2>{{ total_customers }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white mb-3">
+            <div class="card-body">
+                <h5>Total Projects</h5>
+                <h2>{{ total_projects }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark mb-3">
+            <div class="card-body">
+                <h5>Paid Invoices</h5>
+                <h2>{{ paid_invoices }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white mb-3">
+            <div class="card-body">
+                <h5>Pending Invoices</h5>
+                <h2>{{ pending_invoices }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<!-- ================= FILTER FORM ================= -->
+<form method="GET" class="mb-4">
+
+    <input type="date" name="date" class="form-control d-inline w-auto">
+
+    <select name="month" class="form-control d-inline w-auto">
+        <option value="">Month</option>
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+    </select>
+
+    <input type="number" name="year" placeholder="Year" class="form-control d-inline w-auto">
+
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+<!-- ================= CHARTS AREA ================= -->
+<div id="chartsArea">
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <h5 class="text-center">Invoice Status</h5>
+            <canvas id="invoiceStatusChart"></canvas>
+        </div>
+
+        <div class="col-md-6">
+            <h5 class="text-center">Invoice Amounts</h5>
+            <canvas id="invoiceAmountChart"></canvas>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= CHART SCRIPTS ================= -->
+<script>
+/* ===== PIE CHART (STATUS) ===== */
+const statusCtx = document.getElementById('invoiceStatusChart');
+
+new Chart(statusCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Paid', 'Pending'],
+        datasets: [{
+            data: [
+                {{ paid_invoices }},
+                {{ pending_invoices }}
+            ],
+            backgroundColor: ['#28a745', '#dc3545']
+        }]
+    }
+});
+
+/* ===== BAR CHART (AMOUNTS) ===== */
+const amountCtx = document.getElementById('invoiceAmountChart');
+
+new Chart(amountCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Paid Amount', 'Pending Amount'],
+        datasets: [{
+            label: 'KES',
+            data: [
+                {{ total_paid_amount }},
+                {{ total_pending_amount }}
+            ],
+            backgroundColor: ['#007bff', '#ffc107']
+        }]
+    }
+});
+
+/* ===== EXPORT PDF ===== */
+function downloadPDF() {
+
+    const dashboard = document.getElementById("chartsArea");
+
+    html2canvas(dashboard).then(canvas => {
+
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jspdf.jsPDF("p", "mm", "a4");
+
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+
+        pdf.save("report_dashboard.pdf");
+    });
+}
+</script>
+
+{% endblock %}

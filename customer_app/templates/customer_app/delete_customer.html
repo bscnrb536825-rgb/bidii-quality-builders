@@ -1,0 +1,14 @@
+{% extends 'customer_app/base.html' %}
+
+{% block content %}
+
+<h2>Delete Customer</h2>
+
+<p>Delete {{ customer.first_name }} {{ customer.last_name }}?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock %}

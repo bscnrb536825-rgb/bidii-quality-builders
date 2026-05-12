@@ -1,0 +1,28 @@
+{% extends 'customer_app/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>Edit Customer</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button type="submit" class="btn btn-success">
+            Update Customer
+        </button>
+
+        <a href="{% url 'customer_app:customer_list' %}"
+           class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'customer_app/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2>Invoice List</h2>
+
+    <table class="table table-bordered table-striped mt-3">
+
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice.invoice_number }}</td>
+
+                    <!-- Shows customer name (NOT ID) -->
+                    <td>
+                        {{ invoice.customer.first_name }}
+                        {{ invoice.customer.last_name }}
+                    </td>
+
+                    <td>{{ invoice.amount }}</td>
+                    <td>{{ invoice.due_date }}</td>
+
+                    <td>
+                        {% if invoice.status == "Paid" %}
+                            <span class="text-success">{{ invoice.status }}</span>
+                        {% elif invoice.status == "Pending" %}
+                            <span class="text-warning">{{ invoice.status }}</span>
+                        {% else %}
+                            <span class="text-danger">{{ invoice.status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        No invoices found
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customers</title>
+</head>
+<body>
+    <h1>Customer List</h1>
+
+    <!-- 🔍 Search Form -->
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search customers..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- 🧠 Show search message -->
+    {% if query %}
+        <p>Showing results for "{{ query }}"</p>
+    {% endif %}
+
+    <ul>
+        {% for customer in customers %}
+            <li>
+                {{ customer.first_name }} {{ customer.last_name }} <br>
+                Email: {{ customer.email }} <br>
+                Phone: {{ customer.phone }} <br>
+                Address: {{ customer.address }} 
+            </li>
+        {% empty %}
+            <li>No customers found.</li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
